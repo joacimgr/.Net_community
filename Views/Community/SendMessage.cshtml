@@ -1,0 +1,40 @@
+﻿@model DistroLabCommunity.ViewModel.Community.SendMessageVM
+
+<div class="container" style="height: 50px; margin: 10px;">
+    @{
+        if (TempData["sendMessageStatus"] != null) {
+            if ((string)TempData["sendMessageStatus"] == "OK") {
+                <p class="alert alert-success">@TempData["sendMessageStatusMessage"]</p>
+            }
+            else {
+                <p class="alert alert-danger">@TempData["sendMessageStatusMessage"]</p>
+            }
+        }
+    }
+</div>
+
+@using (Html.BeginForm("SendMessage", "Community", FormMethod.Post)) {
+<div class="container">
+    <div class="form-group">
+        <label for="sel1">Recipient:</label>
+        <select class="form-control" id="receiverName" name="receiverName" style="max-width: 25%">
+            @foreach (var user in Model.Users) {
+                <option value="@user.Username">@user.Username</option>
+            }
+        </select>
+    </div>
+    <div>
+        <label for="username">Title:</label>
+        <input type="text" class="form-control" maxlength="55" id="title" name="title" aria-describedby="usernameHelp" placeholder="Enter message title" style="max-width: 40%">
+    </div>
+    <br>
+    <div>
+        <label for="username">Message:</label>
+        <textarea class="form-control" maxlength="1000" id="text" name="text" aria-describedby="usernameHelp" placeholder="Enter message" style="max-width: 50%; height: 200px; resize:none"></textarea>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Send Message</button>
+</div>
+
+    <p>@TempData["sendMessageStatus"]</p>
+}

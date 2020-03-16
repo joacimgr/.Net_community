@@ -1,0 +1,14 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+        <div class="jumbotron">
+            <h1 class="display-4">Welcome to Community3.0</h1>
+            <p class="lead">This will be the place to be in 1997 when it all happens...</p>
+            <hr class="my-4">
+            <p>To use this service, please do login</p>
+            <p>And if you dont have an account already you are free to create as many as you like!</p>
+            <p class="lead">
+                <a class="btn btn-primary btn-lg" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            </p>
+        </div>

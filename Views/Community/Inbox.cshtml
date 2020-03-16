@@ -1,0 +1,96 @@
+﻿@model DistroLabCommunity.ViewModel.Community.InboxVM
+
+@{
+    ViewData["Title"] = "Inbox";
+}
+
+<div class="container" style="height: 130px">
+    <h1 class="my-4">Inbox</h1>
+    <div class="container" style="height: 50px">
+        @if (TempData["removedMessageStatus"] != null) {
+            <p class="alert alert-danger">@TempData["removedMessageStatus"]</p>
+        }
+    </div>
+    @if (Model.Users.Count == 0) {
+        <h4>No messages</h4>
+        <div class="col-lg-6">
+            <p>Total: </p>
+            <p>Opened: </p>
+            <p>Removed: </p>
+        </div>
+        <div class="col-lg-6">
+            <p>@Model.TotalNumberOfMessages</p>
+            <p>@Model.TotalNumberOfOpened</p>
+            <p>@Model.TotalNumberOfRemoved</p>
+        </div>
+    }
+    else {
+        <div class="row">
+            <div class="col-lg-2">
+                <div class="list-group" id="myList" role="tablist">
+                    <h4>From</h4>
+                    @foreach (var user in Model.Users) {
+                        <a class="list-group-item list-group-item-action" data-toggle="list" href="#@user.Username" role="tab">
+                            @user.Username
+                            @if (user.TotalNumberOfUnread != 0) {
+                                <span class="badge badge-light">@user.TotalNumberOfUnread</span>
+                            }
+                        </a>
+                    }
+                </div>
+                <div class="col-lg-6">
+                    <p>Total: </p>
+                    <p>Opened: </p>
+                    <p>Removed: </p>
+                </div>
+                <div class="col-lg-6">
+                    <p>@Model.TotalNumberOfMessages</p>
+                    <p>@Model.TotalNumberOfOpened</p>
+                    <p>@Model.TotalNumberOfRemoved</p>
+                </div>
+
+
+            </div>
+            <div class="col-lg-8" style="margin-left:50px">
+                <div class="tab-content">
+                    @foreach (var user in Model.Users) {
+                        <div class="tab-pane" id="@user.Username" role="tabpanel">
+                            <table class="table table-hover" id="messages_table" style="text-align:justify">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 150px;">Title</th>
+                                        <th style="width: 150px">Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var message in user.Messages) {
+                                        <tr style="cursor: pointer;" onclick="location.href = '@(Url.Action("ViewMessage", "Community" , new { messageId=message.MessageID }))'">
+                                            @{
+                                                if (!message.Opened) {
+                                                    <th style="width: 150px;">@message.Title</th>
+                                                }
+                                                else {
+                                                    <td style="width: 150px;">@message.Title</td>
+                                                }
+                                            }
+                                            <td style="width: 150px;">@message.TimeStamp</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-lg-2">
+
+            </div>
+        </div>
+    }
+
+    <script>
+        $('#myList a').on('click', function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        })
+    </script>

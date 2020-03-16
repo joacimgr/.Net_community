@@ -1,0 +1,11 @@
+﻿@model DistroLabCommunity.ViewModel.Community.ViewMessageVM
+
+<div class="hero-unit" style="max-width: 800px;">
+    <h1>@Model.Title</h1>
+    <h4>Sender: @Model.Sender</h4>
+    <p><pre>@Model.Text</pre></p>
+    @using (Html.BeginForm("RemoveMessage", "Community", FormMethod.Post)) {
+        <button type="submit" style="width: 75px" name="messageId" value="@Model.MessageID" class="btn btn-primary"><span class="glyphicon glyphicon-trash"></span></button>
+    }
+</div>
+

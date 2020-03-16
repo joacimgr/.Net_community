@@ -1,0 +1,11 @@
+﻿@using (Html.BeginForm("SetUserName", "Home", FormMethod.Post)) {
+    <div class="container">
+        <p>@TempData["userCreationInfo"]</p>
+        <div>
+            <label for="username">Set Username</label>
+            <input type="text" class="form-control" maxlength="20" id="username" name="username" aria-describedby="usernameHelp" placeholder="Enter Username" style="max-width: 50%">
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+}
